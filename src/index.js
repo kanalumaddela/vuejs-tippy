@@ -1,18 +1,6 @@
-/*
- * vuejs-tippy
- *
- * @link https://www.maddela.org
- * @link https://github.com/kanalumaddela/vuejs-tippy
- *
- * @author kanalumaddela <git@maddela.org>
- * @copyright Copyright (c) 2020-2020
- * @license MIT
- */
-
 import tippy from 'tippy.js'
 import helpers from './helpers'
-import {props as tippyDefaults} from './props'
-import TippyComponent from './components/tippy'
+import TippyComponent from './components/tippy.vue'
 
 export {
     TippyComponent
@@ -55,10 +43,11 @@ export const createTippy = (el, binding, vNode) => {
 };
 
 export const plugin = {
-    install(Vue, options = {}) {
-        let directive = options.directive || 'tippy';
+    install(Vue, options = {directive: 'tippy', ignoreAttributes: true}) {
+        let directive = options.directive;
+        delete options.directive;
 
-        tippy.setDefaultProps({...tippyDefaults, ...options});
+        tippy.setDefaultProps(options);
 
         Vue.directive(directive, {
             inserted(el, binding, vNode) {

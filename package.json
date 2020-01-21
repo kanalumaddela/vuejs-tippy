@@ -28,5 +28,12 @@
   "homepage": "https://github.com/kanalumaddela/vuejs-tippy#readme",
   "dependencies": {
     "tippy.js": "^5.1.4"
+  },
+  "devDependencies": {
+    "bili": "^4.8.1",
+    "rollup-plugin-vue": "^5.1.5",
+    "serialize-javascript": "^2.1.1",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
   }
 }

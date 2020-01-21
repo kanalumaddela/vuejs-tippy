@@ -1,14 +1,3 @@
-<!--
-  - vuejs-tippy
-  -
-  - @link https://www.maddela.org
-  - @link https://github.com/kanalumaddela/vuejs-tippy
-  -
-  - @author kanalumaddela <git@maddela.org>
-  - @copyright Copyright (c) 2020-2020
-  - @license MIT
-  -->
-
 <template>
     <div class="vuejs-tippy" v-else>
         <div class="vuejs-tippy--content" ref="content">
@@ -46,19 +35,19 @@
             }
         },
         created() {
+            console.log(helpers.camelize('animation-fill'));
+
             // in case :content=0 which is false
             if (typeof this.content !== 'undefined') {
                 this.options.content = this.content;
             }
 
-            // merge element attributes and options prop
-            // options will always override attributes
-            const options = {...this.$attrs, ...this.options};
-
             // loop through validating tippy props
-            Object.keys(options).forEach(attr => {
+            Object.keys(this.$attrs).forEach(attr => {
+                let attrFixed = helpers.camelize(attr);
+
                 if (helpers.isProp(attr)) {
-                    let value = options[attr];
+                    let value = this.$attrs[attr];
 
                     if (!isNaN(value)) {
                         value = Number(value);
@@ -71,10 +60,6 @@
                     // }
 
                     this.options[attr] = value;
-                } else {
-                    if (this.options[attr]) {
-                        delete this.options[attr];
-                    }
                 }
             });
 
@@ -123,6 +108,9 @@
 
             this.options.interactive = true;
             this.tip = tippy(elm, this.options);
+
+            !this.enabled && this.tip.disable();
+            this.visible && this.tip.show();
         },
         watch: {
             content(data) {
