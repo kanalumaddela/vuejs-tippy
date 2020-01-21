@@ -1,14 +1,12 @@
 /*
- * *
- *  * vuejs-tippy
- *  *
- *  * @link https://www.maddela.org
- *  * @link https://github.com/kanalumaddela/vuejs-tippy
- *  *
- *  * @author kanalumaddela <git@maddela.org>
- *  * @copyright Copyright (c) 2020-2020
- *  * @license MIT
+ * vuejs-tippy
  *
+ * @link https://www.maddela.org
+ * @link https://github.com/kanalumaddela/vuejs-tippy
+ *
+ * @author kanalumaddela <git@maddela.org>
+ * @copyright Copyright (c) 2020-2020
+ * @license MIT
  */
 
 export const booleanProps = {
