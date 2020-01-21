@@ -1,0 +1,32 @@
+{
+  "name": "vuejs-tippy",
+  "version": "0.0.1",
+  "description": "tippy.js wrapper for VueJS",
+  "main": "src/index.js",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanalumaddela/vuejs-tippy.git"
+  },
+  "author": "kanalumaddela",
+  "license": "MIT",
+  "keywords": [
+    "tooltip",
+    "tippy",
+    "tippy.js",
+    "vue",
+    "vuejs"
+  ],
+  "bugs": {
+    "url": "https://github.com/kanalumaddela/vuejs-tippy/issues"
+  },
+  "homepage": "https://github.com/kanalumaddela/vuejs-tippy#readme",
+  "dependencies": {
+    "tippy.js": "^5.1.4"
+  }
+}
