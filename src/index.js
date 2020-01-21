@@ -18,6 +18,42 @@ export {
     TippyComponent
 }
 
+export const createTippy = (el, binding, vNode) => {
+    let value = binding.value ? binding.value : {};
+
+    // determine tooltip text
+    ['title', 'content', 'data-tooltip'].forEach(item => {
+        let attr = el.attributes.getNamedItem(item);
+        if (attr) {
+            if (item === 'title') {
+                el.dataset.title = attr.value;
+                el.removeAttribute('title');
+            }
+            value = attr.value;
+        }
+    });
+
+    let instanceOptions = typeof value !== 'object' ? {content: value} : value;
+
+    // vuejs modifiers -> tippy boolean props
+    Object.keys(binding.modifiers).forEach((prop) => {
+        if (helpers.isBooleanProp(prop)) {
+            instanceOptions[prop] = true;
+        }
+    });
+
+    // tippy lifecycle hooks
+    const handlers = vNode.data.on || {};
+    Object.keys(handlers).forEach((method) => {
+        if (helpers.isMethodProp(method)) {
+            instanceOptions[method] = handlers[method];
+        }
+    });
+
+    // create tippy instance
+    tippy(el, instanceOptions);
+};
+
 export const plugin = {
     install(Vue, options = {}) {
         let directive = options.directive || 'tippy';
@@ -29,42 +65,6 @@ export const plugin = {
         options.enableComponent && delete options.enableComponent;
 
         tippy.setDefaultProps({...tippyDefaults, ...options});
-
-        const createTippy = (el, binding, vNode) => {
-            let value = binding.value ? binding.value : {};
-
-            // determine tooltip text
-            ['title', 'content', 'data-tooltip'].forEach(item => {
-                let attr = el.attributes.getNamedItem(item);
-                if (attr) {
-                    if (item === 'title') {
-                        el.dataset.title = attr.value;
-                        el.removeAttribute('title');
-                    }
-                    value = attr.value;
-                }
-            });
-
-            let instanceOptions = typeof value !== 'object' ? {content: value} : value;
-
-            // vuejs modifiers -> tippy boolean props
-            Object.keys(binding.modifiers).forEach((prop) => {
-                if (helpers.isBooleanProp(prop)) {
-                    instanceOptions[prop] = true;
-                }
-            });
-
-            // tippy lifecycle hooks
-            const handlers = vNode.data.on || {};
-            Object.keys(handlers).forEach((method) => {
-                if (helpers.isMethodProp(method)) {
-                    instanceOptions[method] = handlers[method];
-                }
-            });
-
-            // create tippy instance
-            tippy(el, instanceOptions);
-        };
 
         if (enableDirective) {
             Vue.directive(directive, {
