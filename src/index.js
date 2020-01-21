@@ -57,42 +57,32 @@ export const createTippy = (el, binding, vNode) => {
 export const plugin = {
     install(Vue, options = {}) {
         let directive = options.directive || 'tippy';
-        let enableDirective = options.enableDirective || true;
-        let enableComponent = options.enableComponent || true;
-
-        options.directive && delete options.directive;
-        options.enableDirective && delete options.enableDirective;
-        options.enableComponent && delete options.enableComponent;
 
         tippy.setDefaultProps({...tippyDefaults, ...options});
 
-        if (enableDirective) {
-            Vue.directive(directive, {
-                inserted(el, binding, vNode) {
-                    Vue.nextTick().then(_ => createTippy(el, binding, vNode));
-                },
-                componentUpdated(el, binding, vNode, oldVnode) {
-                    if (el._tippy && binding.value && ([null, ''].indexOf(binding.oldValue) !== -1 || (binding.value !== binding.oldValue && typeof binding.oldValue !== 'undefined'))) {
-                        if (['string', 'number'].indexOf(typeof binding.value) !== -1) {
-                            el._tippy.setContent(binding.value);
-                        } else {
-                            el._tippy.setProps(binding.value);
-                        }
+        Vue.directive(directive, {
+            inserted(el, binding, vNode) {
+                Vue.nextTick().then(_ => createTippy(el, binding, vNode));
+            },
+            componentUpdated(el, binding, vNode, oldVnode) {
+                if (el._tippy && binding.value && ([null, ''].indexOf(binding.oldValue) !== -1 || (binding.value !== binding.oldValue && typeof binding.oldValue !== 'undefined'))) {
+                    if (['string', 'number'].indexOf(typeof binding.value) !== -1) {
+                        el._tippy.setContent(binding.value);
+                    } else {
+                        el._tippy.setProps(binding.value);
                     }
-                },
-                unbind(el, binding, vNode) {
-                    if (el.dataset.title) {
-                        el.setAttribute('title', el.dataset.title);
-                        el.removeAttribute('data-title');
-                    }
-                    el._tippy && el._tippy.destroy();
                 }
-            });
-        }
+            },
+            unbind(el, binding, vNode) {
+                if (el.dataset.title) {
+                    el.setAttribute('title', el.dataset.title);
+                    el.removeAttribute('data-title');
+                }
+                el._tippy && el._tippy.destroy();
+            }
+        });
 
-        if (enableComponent) {
-            Vue.component(directive, TippyComponent);
-        }
+        Vue.component(directive, TippyComponent);
     }
 };
 
