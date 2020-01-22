@@ -2,13 +2,11 @@
   "name": "vuejs-tippy",
   "version": "0.0.1",
   "description": "tippy.js wrapper for VueJS",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist/*"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kanalumaddela/vuejs-tippy.git"
@@ -30,9 +28,7 @@
     "tippy.js": "^5.1.4"
   },
   "devDependencies": {
-    "bili": "^4.8.1",
-    "rollup-plugin-vue": "^5.1.5",
-    "serialize-javascript": "^2.1.1",
+    "@vue/component-compiler-utils": "^3.1.1",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   }
