@@ -1,6 +1,6 @@
 import tippy from 'tippy.js'
 import helpers from './helpers'
-import TippyComponent from './components/tippy'
+import TippyComponent from './components/tippy.vue'
 
 export {
     TippyComponent

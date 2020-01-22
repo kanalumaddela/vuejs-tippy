@@ -6,7 +6,10 @@
   "files": [
     "dist/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rollup --config rollup.config.js",
+    "build-dev": "cross-env NODE_ENV=development rollup --config rollup.config.js --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kanalumaddela/vuejs-tippy.git"
@@ -28,7 +31,10 @@
     "tippy.js": "^5.1.4"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.1.1",
+    "rollup": "^1.29.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-vue": "^5.1.5",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   }
