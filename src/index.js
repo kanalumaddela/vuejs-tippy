@@ -42,7 +42,7 @@ export const createTippy = (el, binding, vNode) => {
     tippy(el, instanceOptions);
 };
 
-export const plugin = {
+const plugin = {
     install(Vue, options = {directive: 'tippy', ignoreAttributes: true}) {
         let directive = options.directive;
         delete options.directive;
@@ -77,5 +77,7 @@ export const plugin = {
 
 if (typeof window !== 'undefined' && window.Vue) {
     window.Vue.use(plugin);
-    window.Vue.use('tippy', TippyComponent);
+    window.Vue.component('tippy', TippyComponent);
 }
+
+export default plugin;

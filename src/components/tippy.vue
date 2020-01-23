@@ -31,7 +31,7 @@
         },
         data() {
             return {
-                tip: false,
+                tip: null,
             }
         },
         created() {
@@ -42,24 +42,18 @@
                 this.options.content = this.content;
             }
 
-            // loop through validating tippy props
+            // loop through $attrs for valid tippy props
             Object.keys(this.$attrs).forEach(attr => {
                 let attrFixed = helpers.camelize(attr);
 
-                if (helpers.isProp(attr)) {
+                if (helpers.isProp(attrFixed)) {
                     let value = this.$attrs[attr];
 
                     if (!isNaN(value)) {
                         value = Number(value);
                     }
 
-                    // if (typeof value !== 'string') {
-                    //     if ([0, 1, '0', '1', 'true', 'false'].indexOf(value) !== -1) {
-                    //         value = Boolean(value);
-                    //     }
-                    // }
-
-                    this.options[attr] = value;
+                    this.options[attrFixed] = value;
                 }
             });
 
@@ -70,15 +64,12 @@
             });
         },
         mounted() {
-            let elm;
-            let cloned = false;
-            if (this.$attrs.for) {
-                const selectorType = this.$attrs.for[0];
-                const selectorName = this.$attrs.for.slice(1);
+            let elm, cloned = false;
 
-                switch (selectorType) {
+            if (this.$attrs.for) {
+                switch (this.$attrs.for[0]) {
                     case '#':
-                        elm = document.getElementById(selectorName);
+                        elm = document.getElementById(this.$attrs.for.slice(1));
                         break;
                     case '.':
                         elm = document.querySelectorAll(this.$attrs.for);
@@ -86,6 +77,7 @@
                         break;
                     default:
                         elm = document.querySelector(`[name='${this.$attrs.for}']`);
+                        break;
                 }
             }
 
