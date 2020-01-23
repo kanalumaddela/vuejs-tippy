@@ -58,7 +58,7 @@ Vue.use(VueJSTippy);
 
 ```
 #### `<tippy>` Vue Component method(s)
-```vue
+```html
 <tippy :content="timer">
     <button>Hover for a reactive tooltip</button>
 </tippy>
