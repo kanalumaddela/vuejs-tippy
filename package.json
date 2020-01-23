@@ -2,7 +2,7 @@
   "name": "vuejs-tippy",
   "version": "0.0.1",
   "description": "tippy.js wrapper for VueJS",
-  "main": "dist/index.js",
+  "main": "dist/vuejs-tippy.min.js",
   "files": [
     "dist/*"
   ],

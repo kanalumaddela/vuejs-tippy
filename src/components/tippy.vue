@@ -31,7 +31,7 @@
         },
         data() {
             return {
-                tip: null,
+                tip: false,
             }
         },
         created() {
