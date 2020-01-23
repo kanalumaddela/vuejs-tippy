@@ -18,7 +18,7 @@
 #### CDN
 ```html
 <!-- I have no idea if this works, tell me if it doesn't -->
-<script src="https://unpkg.com/vuejs-tippy@0.0.2/dist/vuejs-tippy.min.js"></script>
+<script src="https://unpkg.com/vuejs-tippy@0.0.4/dist/vuejs-tippy.min.js"></script>
 ```
 
 #### Package Manager
