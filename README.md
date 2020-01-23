@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c0847b524e867249a33a/maintainability)](https://codeclimate.com/github/kanalumaddela/vuejs-tippy/maintainability)
 [![npm](https://img.shields.io/npm/v/vuejs-tippy?label=vuejs-tippy&style=flat-square)](https://www.npmjs.com/package/vuejs-tippy)
 [![npm](https://img.shields.io/npm/dw/vuejs-tippy?style=flat-square)](https://www.npmjs.com/package/vuejs-tippy)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/vuejs-tippy?style=flat-square)
+![npm bundle size](https://img.shields.io/bundlephobia/min/vuejs-tippy?style=flat-square)
 [![GitHub stars](https://img.shields.io/github/stars/kanalumaddela/vuejs-tippy.svg?style=flat-square)](https://github.com/kanalumaddela/vuejs-tippy/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/kanalumaddela/vuejs-tippy.svg?style=flat-square)](https://github.com/kanalumaddela/vuejs-tippy/network)
 [![GitHub issues](https://img.shields.io/github/issues/kanalumaddela/vuejs-tippy.svg?style=flat-square)](https://github.com/kanalumaddela/vuejs-tippy/issues)
@@ -15,9 +15,20 @@
 
 ## Quick Setup
 
+#### CDN
+```html
+<!-- I have no idea if this works, tell me if it doesn't -->
+<script src="https://unpkg.com/vuejs-tippy@0.0.2/dist/vuejs-tippy.min.js"></script>
+```
+
+#### Package Manager
 *Client side JS should be a dev dependency for those who build their app's assets*
 ```shell script
+# npm
 npm i --save-dev vuejs-tippy
+
+# yarn
+yarn add --dev vuejs-tippy
 ```
 
 ```js
