@@ -6,12 +6,27 @@ export {
     TippyComponent
 }
 
+/**
+ * Create a tippy.js instance for a given element
+ *
+ * @param {HTMLElement} el
+ * @param {DirectiveBinding} binding
+ * @param {VNode} vNode
+ */
 export const createTippy = (el, binding, vNode) => {
     let value = binding.value ? binding.value : {};
 
-    // determine tooltip text
+    console.log(vNode);
+    console.log('ad asds ad aada');
+
+    // determine tooltip content
     ['title', 'content', 'data-tooltip'].forEach(item => {
         let attr = el.attributes.getNamedItem(item);
+
+        if (item === 'content') {
+            console.debug('asadadajdbgdhsdbgfhdsb sdfh bsdhf s');
+        }
+
         if (attr) {
             if (item === 'title') {
                 el.dataset.title = attr.value;
@@ -38,13 +53,14 @@ export const createTippy = (el, binding, vNode) => {
         }
     });
 
+
     // create tippy instance
     tippy(el, instanceOptions);
 };
 
 const plugin = {
     install(Vue, options = {directive: 'tippy', ignoreAttributes: true}) {
-        let directive = options.directive;
+        const directive = options.directive;
         delete options.directive;
 
         tippy.setDefaultProps(options);
@@ -54,6 +70,23 @@ const plugin = {
                 Vue.nextTick().then(_ => createTippy(el, binding, vNode));
             },
             componentUpdated(el, binding, vNode, oldVnode) {
+                if (el._tippy) {
+                    let content;
+
+                    //
+
+                    if (vNode.data.attrs.content && vNode.data.attrs.content !== oldVnode.data.attrs.content) {
+                        content = vNode.data.attrs.content;
+                    }
+                    if (binding.value) {
+
+                    }
+
+                    if (content) {
+                        el._tippy.setContent(content);
+                    }
+                }
+
                 if (el._tippy && binding.value && ([null, ''].indexOf(binding.oldValue) !== -1 || (binding.value !== binding.oldValue && typeof binding.oldValue !== 'undefined'))) {
                     if (['string', 'number'].indexOf(typeof binding.value) !== -1) {
                         el._tippy.setContent(binding.value);

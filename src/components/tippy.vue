@@ -19,8 +19,7 @@
             content: [String, Number],
             options: {
                 type: Object,
-                default: () => {
-                    return {}
+                default: _ => {
                 }
             },
             enabled: {
@@ -35,9 +34,12 @@
             }
         },
         created() {
-            console.log(helpers.camelize('animation-fill'));
+            //console.log(helpers.camelize('animation-fill'));
 
             // in case :content=0 which is false
+
+            console.log(typeof this.content);
+
             if (typeof this.content !== 'undefined') {
                 this.options.content = this.content;
             }
@@ -73,7 +75,7 @@
                         break;
                     case '.':
                         elm = document.querySelectorAll(this.$attrs.for);
-                        cloned = true;
+                        cloned = true; // only clone element for class based tooltips
                         break;
                     default:
                         elm = document.querySelector(`[name='${this.$attrs.for}']`);

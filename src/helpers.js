@@ -3,9 +3,7 @@ import {booleanProps, methodProps, props} from "./props";
 export default {
     camelize(string) {
         if (string.indexOf('-') !== -1) {
-            return string.replace(/(-[a-z])/, match => {
-                return match.slice(1).toUpperCase();
-            });
+            return string.replace(/(-[a-z])/, match => match.slice(1).toUpperCase());
         } else {
             return string;
         }
