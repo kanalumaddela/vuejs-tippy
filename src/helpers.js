@@ -16,20 +16,15 @@ export default {
     isMethodProp(prop) {
         return methodProps.indexOf(prop) !== -1;
     },
-    parseAttributes(attrs = {}, el = null) {
+    parseAttributes(attrs = {}) {
         let options = {};
 
-        for (let attr in attrs) {
-            let attrFixed = this.camelize(attr);
-
-            if (el && ['data-tooltip', 'tooltip', 'title'].indexOf(attr) !== -1) {
-                attrFixed = 'content';
-            }
+        for (const attr in attrs) {
+            const attrFixed = attr === 'title' ? 'content' : this.camelize(attr);
 
             if (this.isProp(attrFixed) && !this.isMethodProp(attrFixed)) {
                 const value = attrs[attr];
 
-                // converts prop to their appropriate type, this was annoying
                 options[attrFixed] = this.isBooleanProp(attrFixed) ? value.length === 1 ? Boolean(Number(value)) : (value.length ? value === 'true' : true) : !isNaN(value) ? Number(value) : value;
             }
         }
@@ -39,7 +34,7 @@ export default {
     parseHandlers(handlers = {}) {
         let options = {};
 
-        for (let method in handlers) {
+        for (const method in handlers) {
             if (this.isMethodProp(method)) {
                 options[method] = handlers[method];
             }

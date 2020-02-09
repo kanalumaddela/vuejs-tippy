@@ -48,7 +48,7 @@
                         break;
                     case '.':
                         elm = document.querySelectorAll(this.$attrs.for);
-                        cloned = true; // only clone element for class based tooltips
+                        cloned = true;
                         break;
                     default:
                         elm = document.querySelector(`[name='${this.$attrs.for}']`);
@@ -60,12 +60,10 @@
                 this.tippyOptions.content = this.content;
             }
 
-            // determine tippy trigger
             if (!elm && this.$refs.trigger.textContent.length) {
                 elm = this.$refs.trigger;
             }
 
-            // determine content if not yet given
             if (typeof this.tippyOptions.content === 'undefined') {
                 this.tippyOptions.content = this.$refs.content.textContent.length ? this.$refs.content : this.$refs.trigger;
 

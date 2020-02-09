@@ -82,8 +82,8 @@ Vue.use(VueJSTippy, options); // component is also loaded here
 
 #### `v-tippy` Directive
 
-- allows using `title`, but is **static**, will not be checked even if set as prop
-- `v-tippy` and `:content` are checked on element updates
+- allows using `title`, but is **static**
+- `v-tippy` and `:content` are checked on updates
 - utilizes vuejs directive modifiers
 
 ##### Static Tooltip

@@ -12,14 +12,12 @@ export const createTippy = (el, binding, vNode) => {
 
     options = {...(vNode.data.attrs ? helpers.parseAttributes(vNode.data.attrs) : {}), ...binding.modifiers, ...options, ...(vNode.data.on ? helpers.parseHandlers(vNode.data.on) : {})};
 
-    // "backup" title attribute to fallback if tippy is removed only if title matches **initial** content?
-    let titleContent;
-    if (el.hasAttribute('title') && options.content && options.content === (titleContent = el.getAttribute('title'))) {
+    let titleContent = el.getAttribute('title');
+    if (el.hasAttribute('title') && options.content && options.content === titleContent) {
         el.dataset.title = titleContent;
         el.removeAttribute('title');
     }
 
-    // create tippy instance
     tippy(el, options);
 };
 
@@ -27,7 +25,7 @@ const plugin = {
     install(Vue, options = {}) {
         options = {...{directive: 'tippy', ignoreAttributes: true}, ...options};
         const directive = options.directive;
-        delete options.directive; // dont need tippy warnings
+        delete options.directive;
 
         tippy.setDefaultProps(options);
 
@@ -40,13 +38,12 @@ const plugin = {
                     let options = {};
 
                     if (typeof binding.value === 'object') {
-                        options = binding.value; // checking objects efficiently not possible
+                        options = binding.value;
                     }
                     if (['number', 'string'].indexOf(typeof binding.value) !== -1 && binding.value !== binding.oldValue) {
                         options.content = binding.value;
                     }
 
-                    // check :props only if content has not yet been determined/set
                     if (typeof options.content === 'undefined' && typeof vNode.data.attrs !== 'undefined' && typeof vNode.data.attrs.content !== 'undefined' && vNode.data.attrs.content !== oldVnode.data.attrs.content) {
                         options.content = vNode.data.attrs.content;
                     }
@@ -69,7 +66,6 @@ const plugin = {
 
 if (typeof window !== 'undefined' && window.Vue) {
     window.Vue.use(plugin);
-    window.Vue.component('tippy', TippyComponent);
 }
 
 export default plugin;
