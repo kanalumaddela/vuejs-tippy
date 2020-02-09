@@ -1,4 +1,4 @@
-# VueJS  Directive + Component for [tippy.js (v5)](https://github.com/atomiks/tippyjs)
+# VueJS Directive + Component for [tippy.js (v5)](https://github.com/atomiks/tippyjs)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/c0847b524e867249a33a/maintainability)](https://codeclimate.com/github/kanalumaddela/vuejs-tippy/maintainability)
 [![npm](https://img.shields.io/npm/v/vuejs-tippy?label=vuejs-tippy&style=flat-square)](https://www.npmjs.com/package/vuejs-tippy)
@@ -7,17 +7,13 @@
 ![bundle size](https://img.shields.io/bundlephobia/min/vuejs-tippy?style=flat-square)
 [![license](https://img.shields.io/github/license/kanalumaddela/vuejs-tippy.svg?style=flat-square)](https://github.com/kanalumaddela/vuejs-tippy/blob/master/LICENSE)
 
-*Notice: **This is a pre-release.** Currently the component wraps everything in `<div>` because it doesn't make sense in my opinion to use `<span>` or styling the  `<div>` to be `inline`/`inline-block`. There are clases added for you to handle the styling/formatting.*
+*Notice: **This is a pre-release.** Currently the component wraps everything in `<div>` because it doesn't make sense in my opinion to use `<span>` or styling the `<div>` to be `inline`/`inline-block`. There are clases added for you to handle the styling/formatting.*
 
 #### Todo:
 
 - [ ] figure out a better way to avoid wrapping everything
-  - possibly use `innerHTML`, have to figure out initial setup in terms of removing/hiding the original element
 - [ ] write tests
 - [ ] efficient code
-- [ ] possible backwards compatibility with [vue-tippy](https://github.com/KABBOUCHI/vue-tippy)
-  - focus would be primarily props/attributes
-  - maybe a single component that checks for `{v4: true}` or `:v4=true`
 - [ ] [tippy.js singleton?](https://atomiks.github.io/tippyjs/#singleton)
 
 ---
@@ -68,7 +64,7 @@ Vue.use(VueJSTippy, options); // component is also loaded here
 </table>
 -->
 
-#### Options
+#### Default Options
 - [tippy.js props](https://atomiks.github.io/tippyjs/all-props/) combined with the following:
 
 | key | desc | type | defaut |
@@ -86,26 +82,32 @@ Vue.use(VueJSTippy, options); // component is also loaded here
 
 #### `v-tippy` Directive
 
-- `:content`, `:tooltip`, `:options`, and/or the `v-tippy` argument are checked on element updates
-- allows using `title`, but is **static**, will not be checked even if set to vue variable
-- uses vuejs modifier to quickly set tippy.js boolean props
-   - ```html
-     <button v-tippy.interactive content="sets {interactive: true}">interactive tooltip</button>
-     ```
-- cannot set tippy.js props via html attributes (e.g. `animate-fill="true"`. This does not apply to `data-tippy-*` unless `ignoreAttributes: true`)
+- allows using `title`, but is **static**, will not be checked even if set as prop
+- `v-tippy` and `:content` are checked on element updates
+- utilizes vuejs directive modifiers
 
+##### Static Tooltip
+- `content`, `title` as attributes
 ```html
-<!-- static attribute based tooltip, can use content="", title="", or data-tooltip="" -->
-<button v-tippy content="I'm a tooltip!">Hover over me!</button>
+<button v-tippy <content|title>="I'm a tooltip!">Hover over me!</button>
+```
 
-<!-- reactive tooltip with :tooltip prop -->
-<button v-tippy :tooltip="timer">Hover over me!</button>
+##### Dynamic Tooltip
+- Set tooltip content via directive argument:`v-tippy="variable"` or as `:content` prop
+```html
+<button v-tippy :content="timer">Hover over me!</button>
 
-<!-- or pass the variable directly to the directive -->
+<!-- or -->
+
 <button v-tippy="timer">Hover over me!</button>
+```
 
-<!-- using directive modifiers to set tippy.js boolean props to true -->
-<button v-tippy.interactive content="same as setting {interactive: true}">Hover over me!</button>
+##### Directive Modifiers
+- append to `v-tippy` directive e.g. `v-tippy.modifier`, applies only to tippy.js boolean props
+```html
+<button v-tippy.interactive content="sets tippy.js option {interactive: true}">
+    Hover over me!
+</button>
 ```
 
 #### `<tippy>` Vue Component
@@ -113,7 +115,7 @@ Vue.use(VueJSTippy, options); // component is also loaded here
 - only `:content` and `:options`
 - `:enabled` & `:visible` boolean props for tippy's [.enable()](https://atomiks.github.io/tippyjs/methods/#show) / [.disable()](https://atomiks.github.io/tippyjs/methods/#disable) and [.show()](https://atomiks.github.io/tippyjs/methods/#show) / [.hide()](https://atomiks.github.io/tippyjs/methods/#hide) functions respectively
 - can set options quickly via html attributes
-  - `<tippy animate-fill="true">bg fill tooltip</tippy>` 
+  - ex: `<tippy animate-fill="true" content="bg fill tooltip"><button>Hover over me!</button></tippy>` 
 
 ```html
 <tippy :content="timer">
@@ -121,10 +123,10 @@ Vue.use(VueJSTippy, options); // component is also loaded here
 </tippy>
 
 <tippy :options="{content: timer, theme: 'light'}">
-    <button>Props to pass making it easy to use</button>
+    <button>Props to for quick customization</button>
 </tippy>
 
-<!-- external tippy with trigger named  -->
+<!-- external tippy with trigger named -->
 
 <tippy for="target">
     I'm a tooltip!

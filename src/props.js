@@ -1,66 +1,55 @@
-export const booleanProps = {
-    allowHTML: true,
-    arrow: true,
-    flip: true,
-    flipOnUpdate: false,
-    hideOnClick: true,
-    ignoreAttributes: false,
-    inertia: false,
-    interactive: false,
-    lazy: true,
-    multiple: false,
-    showOnCreate: false,
-    touch: true,
-};
+export const booleanProps = [
+    'allowHTML',
+    'arrow',
+    'flip',
+    'flipOnUpdate',
+    'hideOnClick',
+    'ignoreAttributes',
+    'inertia',
+    'interactive',
+    'lazy',
+    'multiple',
+    'showOnCreate',
+    'touch',
+];
 
-export const methodProps = {
-    onAfterUpdate() {
-    },
-    onBeforeUpdate() {
-    },
-    onCreate() {
-    },
-    onDestroy() {
-    },
-    onHidden() {
-    },
-    onHide() {
-    },
-    onMount() {
-    },
-    onShow() {
-    },
-    onShown() {
-    },
-    onTrigger() {
-    },
-    onUntrigger() {
-    },
-};
+export const methodProps = [
+    'onAfterUpdate',
+    'onBeforeUpdate',
+    'onCreate',
+    'onDestroy',
+    'onHidden',
+    'onHide',
+    'onMount',
+    'onShow',
+    'onShown',
+    'onTrigger',
+    'onUntrigger',
+];
 
-export const props = {
-    animation: 'fade',
-    appendTo: () => document.body,
-    aria: 'describedby',
-    boundary: 'scrollParent',
-    content: '',
-    delay: 0,
-    distance: 10,
-    duration: [300, 250],
-    flipBehavior: 'flip',
-    interactiveBorder: 2,
-    interactiveDebounce: 0,
-    maxWidth: 350,
-    offset: 0,
-    placement: 'top',
-    plugins: [],
-    popperOptions: {},
-    role: 'tooltip',
-    theme: '',
-    trigger: 'mouseenter focus',
-    triggerTarget: null,
-    updateDuration: 0,
-    zIndex: 9999,
+export const props = [
+    'animation',
+    'appendTo',
+    'aria',
+    'boundary',
+    'content',
+    'delay',
+    'distance',
+    'duration',
+    'flipBehavior',
+    'interactiveBorder',
+    'interactiveDebounce',
+    'maxWidth',
+    'offset',
+    'placement',
+    'plugins',
+    'popperOptions',
+    'role',
+    'theme',
+    'trigger',
+    'triggerTarget',
+    'updateDuration',
+    'zIndex',
     ...booleanProps,
     ...methodProps,
-};
+];

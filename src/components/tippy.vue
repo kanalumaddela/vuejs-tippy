@@ -1,5 +1,5 @@
 <template>
-    <div class="vuejs-tippy" v-else>
+    <div class="vuejs-tippy">
         <div class="vuejs-tippy--content" ref="content">
             <slot name="content"/>
         </div>
@@ -16,10 +16,11 @@
     export default {
         name: "tippy",
         props: {
-            content: [String, Number],
+            content: null,
             options: {
                 type: Object,
                 default: _ => {
+                    return {}
                 }
             },
             enabled: {
@@ -31,39 +32,11 @@
         data() {
             return {
                 tip: null,
+                tippyOptions: {},
             }
         },
         created() {
-            //console.log(helpers.camelize('animation-fill'));
-
-            // in case :content=0 which is false
-
-            console.log(typeof this.content);
-
-            if (typeof this.content !== 'undefined') {
-                this.options.content = this.content;
-            }
-
-            // loop through $attrs for valid tippy props
-            Object.keys(this.$attrs).forEach(attr => {
-                let attrFixed = helpers.camelize(attr);
-
-                if (helpers.isProp(attrFixed)) {
-                    let value = this.$attrs[attr];
-
-                    if (!isNaN(value)) {
-                        value = Number(value);
-                    }
-
-                    this.options[attrFixed] = value;
-                }
-            });
-
-            Object.keys(this.$listeners).forEach(methodName => {
-                if (helpers.isMethodProp(methodName)) {
-                    this.options[methodName] = this.$listeners[methodName];
-                }
-            });
+            this.tippyOptions = {...helpers.parseAttributes(this.$attrs), ...helpers.parseHandlers(this.$listeners), ...this.options};
         },
         mounted() {
             let elm, cloned = false;
@@ -83,42 +56,56 @@
                 }
             }
 
-            if (this.$refs.content.innerHTML.length > 0 && this.$refs.trigger.innerHTML.length > 0 || (typeof this.options.content !== 'undefined')) {
+            if (typeof this.content !== 'undefined') {
+                this.tippyOptions.content = this.content;
+            }
+
+            // determine tippy trigger
+            if (!elm && this.$refs.trigger.textContent.length) {
                 elm = this.$refs.trigger;
             }
 
-            if (typeof this.options.content === 'undefined') {
-                this.options.content = this.$refs.content.innerHTML.length > 0 ? this.$refs.content : this.$refs.trigger;
+            // determine content if not yet given
+            if (typeof this.tippyOptions.content === 'undefined') {
+                this.tippyOptions.content = this.$refs.content.textContent.length ? this.$refs.content : this.$refs.trigger;
 
-                if (this.options.content.className === 'vuejs-tippy--trigger') {
-                    this.options.content.className = 'vuejs-tippy--content';
-                }
+                if (this.tippyOptions.content.childNodes.length === 1) {
+                    if (this.tippyOptions.content.className === 'vuejs-tippy--trigger') {
+                        this.$refs.trigger.remove();
+                        this.$refs.content.remove();
+                    }
 
-                if (cloned) {
-                    let content = this.options.content;
-                    this.options.content = () => content.cloneNode(true);
+                    this.tippyOptions.content = this.tippyOptions.content.childNodes[0];
                 }
             }
 
-            this.options.interactive = true;
-            this.tip = tippy(elm, this.options);
+            if (cloned) {
+                const dupedContent = this.tippyOptions.content;
+                this.tippyOptions.content = () => dupedContent.cloneNode(true);
+            }
 
-            !this.enabled && this.tip.disable();
-            this.visible && this.tip.show();
+            this.tip = tippy(elm, this.tippyOptions);
+            !this.enabled && this.validTippy() && this.tip.disable();
+            this.visible && this.validTippy() && this.tip.show();
+        },
+        methods: {
+            validTippy() {
+                return typeof this.tip === 'object';
+            }
         },
         watch: {
             content(data) {
-                this.tip && this.tip.setContent(data);
+                this.validTippy() && this.$nextTick(() => this.tip.setContent(data));
             },
             options(data) {
-                this.tip && this.tip.setProps(data);
+                this.validTippy() && this.$nextTick(() => this.tip.setProps(data));
             },
             enabled(data) {
-                this.tip && this.tip[data ? 'enable' : 'disable']();
+                this.validTippy() && this.$nextTick(() => this.tip[data ? 'enable' : 'disable']());
             },
             visible(data) {
-                this.tip && this.tip[data ? 'show' : 'hide']();
-            }
+                this.validTippy() && this.$nextTick(() => this.tip[data ? 'show' : 'hide']());
+            },
         },
     }
 </script>
